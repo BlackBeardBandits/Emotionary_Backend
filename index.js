@@ -19,7 +19,7 @@ mongoose
 
 app.get("/", (req, res) => {
   //express 앱(app)을 넣고, root directory에 오면,
-  res.send("이것이 나의 첫번째 node js 진짜 개발자가 되어보자"); //"Hello World!" 를 출력되게 해준다.
+  res.send("Hello World!"); //"Hello World!" 를 출력되게 해준다.
 });
 
 app.listen(port, () => {
