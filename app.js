@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 // Router
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const registRouter = require("./routers/regist");
+const registRouter = require("./routes/regist");
 
 // Key for hiding DB password
 const config = require("./config/key");
@@ -24,6 +24,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Middleware
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/regist", registRouter);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
@@ -36,11 +41,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render("error");
 });
-
-// Middleware
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/regist", registRouter);
 
 // connect mongoDB with mongoose
 mongoose
