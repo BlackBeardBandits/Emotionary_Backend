@@ -17,10 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// // Define Routes
+// Define Routes
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 app.use("/api/register", require("./routes/api/register"));
+app.use("/api/login", require("./routes/api/login"));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
