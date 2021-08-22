@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const userSchema = mongoose.Schema({
   name: {
     type: String,
@@ -27,6 +28,16 @@ const userSchema = mongoose.Schema({
     type: Number,
   },
 });
+
+userSchema.methods.comparePassword = async function (plainPassword) {
+  //plainPassword를 암호화해서 현재 비밀번호화 비교
+  try {
+    const isMatch = await bcrypt.compare(plainPassword, this.password);
+    return isMatch;
+  } catch (err) {
+    return err;
+  }
+};
 
 const User = mongoose.model("User", userSchema);
 

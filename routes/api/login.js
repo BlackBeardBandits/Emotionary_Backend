@@ -1,6 +1,5 @@
 const express = require("express");
 const { User } = require("../../models/User");
-const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 // @route  POST api/login
@@ -16,18 +15,20 @@ router.post("/", async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "해당 이메일이 없습니다." });
 
-    // password를 암호화 하기
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(password, salt);
-
-    // console.log(hashedPassword);
-    // console.log(user.password);
-
-    if (password === user.password) {
-      console.log(password);
-      console.log(user.password);
-      return res.status(200).json({ success: true, id: user._id });
-    }
+    user
+      .comparePassword(password)
+      .then((isMatch) => {
+        if (!isMatch) {
+          return res.status(400).json({
+            Success: false,
+            message: "비밀번호가 일치하지 않습니다.",
+          });
+        }
+        return res.status(200).json({
+          success: true,
+        });
+      })
+      .catch((err) => res.status(500).json({ success: false, err }));
   } catch (error) {
     res.status(500).send("Server Error");
   }

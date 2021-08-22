@@ -19,8 +19,8 @@ router.post("/", async (req, res, next) => {
     console.log(user);
 
     // password를 암호화 하기
-    // const salt = await bcrypt.genSalt(10);
-    // user.password = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
     // Save data in mongoDB
     await user.save((err, userInfo) => {
