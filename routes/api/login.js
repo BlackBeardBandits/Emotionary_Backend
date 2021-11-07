@@ -26,6 +26,8 @@ router.post("/", async (req, res, next) => {
         }
         return res.status(200).json({
           success: true,
+          id: email,
+          name: user.name,
         });
       })
       .catch((err) => res.status(500).json({ success: false, err }));
